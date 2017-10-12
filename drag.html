@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>拖拽</title>
+    <style type="text/css">
+        #box{
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            line-height: 100px;
+            color: red;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript">
+    // 封装函数
+    function Drag(id){
+        // 获取元素
+        var box = document.getElementById(id);
+        // 初始化div位置
+        var disX = 0;
+        var disY = 0;
+        // 执行box的鼠标按下事件
+        box.addEventListener('mousedown',down);
+        function down(ev){
+            disX = ev.clientX-this.offsetLeft;
+            disY = ev.clientY-this.offsetTop;
+            document.addEventListener('mousemove',move);
+            document.addEventListener('mouseup',up);
+            function move(ev){
+                box.style.left = ev.clientX - disX+ 'px';
+                box.style.top = ev.clientY - disY + 'px';
+            }
+            function up(){
+                document.removeEventListener('mousemove',move);
+                document.addEventListener('mouseup',up);
+            }
+        }
+    }
+    Drag('box');
+</script>
+</body>
+</html>
